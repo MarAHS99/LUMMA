@@ -27,66 +27,354 @@
     overflow-x: hidden;
   }
 
-  /* ── PÁGINA ── */
+  /* ── NAV ── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
-    z-index: 1;
-    padding: 20px 48px;
+    z-index: 10;
+    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(246,247,249,0.8);
-    backdrop-filter: blur(12px);
+    background: rgba(246,247,249,0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
-  .logo { font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
-  .logo span { color: var(--mint); }
-  nav ul { list-style: none; display: flex; gap: 32px; }
-  nav ul a { font-size: 14px; color: var(--muted); text-decoration: none; font-weight: 400; }
-  .nav-cta { background: var(--ink); color: white !important; padding: 9px 20px; border-radius: 8px; font-size: 13px !important; font-weight: 500 !important; }
 
+  .logo { font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+  .logo span { color: var(--mint); }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-cta {
+    background: var(--ink);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* ── HERO ── */
   .hero {
-    padding: 160px 48px 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
+    padding: 100px 20px 48px;
     max-width: 1200px;
     margin: 0 auto;
   }
-  .hero-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--mint); margin-bottom: 20px; }
-  .hero h1 { font-size: clamp(36px, 4.5vw, 58px); font-weight: 700; line-height: 1.1; letter-spacing: -.03em; margin-bottom: 20px; }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 14px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.03em;
+    margin-bottom: 16px;
+  }
+
   .hero h1 em { font-style: normal; color: var(--mint); }
-  .hero p { font-size: 17px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; max-width: 420px; }
-  .hero-btns { display: flex; gap: 12px; }
-  .btn-primary { background: var(--mint); color: var(--ink); border: none; padding: 14px 28px; font-size: 15px; font-weight: 600; font-family: 'Satoshi', sans-serif; border-radius: 10px; cursor: pointer; }
-  .btn-secondary { background: transparent; color: var(--ink); border: 1.5px solid var(--border); padding: 14px 28px; font-size: 15px; font-weight: 500; font-family: 'Satoshi', sans-serif; border-radius: 10px; cursor: pointer; }
-  .ar-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; background: var(--mint-soft); color: #0B7A63; padding: 5px 12px; border-radius: 20px; margin-top: 24px; }
-  .ar-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); animation: pulse 1.5s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
 
-  .hero-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .product-card { background: var(--surface); border-radius: 16px; padding: 20px; border: 1px solid var(--border); }
-  .product-card:first-child { grid-column: 1/-1; display: flex; align-items: center; gap: 20px; background: linear-gradient(135deg,#0F1115 0%,#1A1D24 100%); color: white; }
-  .card-badge { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; background: rgba(86,215,184,.15); color: var(--mint); padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 8px; }
-  .card-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-  .card-price { font-size: 22px; font-weight: 700; color: var(--butter); }
-  .card-price-small { font-size: 20px; font-weight: 700; color: var(--ink); }
-  .card-sub { font-size: 12px; color: var(--muted); }
+  .hero p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 28px;
+    max-width: 420px;
+  }
 
-  .section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; }
-  .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 36px; }
-  .section-label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--mint); margin-bottom: 8px; }
-  .section-title { font-size: 28px; font-weight: 700; letter-spacing: -.02em; }
-  .products-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
-  .pcard { background: var(--surface); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; }
-  .pcard-img { height: 140px; background: var(--bg); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); }
-  .pcard-body { padding: 16px; }
-  .pcard-cat { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 4px; }
-  .pcard-name { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
-  .pcard-price { font-size: 18px; font-weight: 700; }
-  .pcard-try { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--mint); margin-top: 8px; }
+  .hero-btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--mint);
+    color: var(--ink);
+    border: none;
+    padding: 13px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Satoshi', sans-serif;
+    border-radius: 10px;
+    cursor: pointer;
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid rgba(0,0,0,0.12);
+    padding: 13px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Satoshi', sans-serif;
+    border-radius: 10px;
+    cursor: pointer;
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .ar-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--mint-soft);
+    color: #0B7A63;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-top: 20px;
+  }
+
+  .ar-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--mint);
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.4;transform:scale(.8)}
+  }
+
+  /* ── FEATURED CARD ── */
+  .hero-featured {
+    margin: 32px 20px 0;
+    max-width: 1200px;
+  }
+
+  .featured-card {
+    background: linear-gradient(135deg, #0F1115 0%, #1A1D24 100%);
+    border-radius: 18px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: white;
+  }
+
+  .featured-glasses {
+    flex-shrink: 0;
+  }
+
+  .card-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: rgba(86,215,184,.15);
+    color: var(--mint);
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+
+  .card-name { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+  .card-price { font-size: 24px; font-weight: 700; color: var(--butter); }
+
+  /* ── PRODUCTS SCROLL ── */
+  .section {
+    padding: 40px 0 20px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    padding: 0 20px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 4px;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+  }
+
+  .section-link {
+    font-size: 13px;
+    color: var(--mint);
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* Scroll horizontal en mobile */
+  .products-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 20px 16px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .products-scroll::-webkit-scrollbar { display: none; }
+
+  .pcard {
+    background: var(--surface);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    flex-shrink: 0;
+    width: 160px;
+    scroll-snap-align: start;
+  }
+
+  .pcard-img {
+    height: 110px;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pcard-body { padding: 12px; }
+  .pcard-cat { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 3px; }
+  .pcard-name { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .pcard-price { font-size: 15px; font-weight: 700; }
+  .pcard-try {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--mint);
+    margin-top: 6px;
+  }
+
+  /* ── PROMO BANNER ── */
+  .promo-banner {
+    margin: 8px 20px 40px;
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    text-align: center;
+  }
+
+  .promo-banner h3 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    margin-bottom: 8px;
+  }
+
+  .promo-banner p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .promo-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--mint);
+    color: var(--ink);
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    font-family: 'Satoshi', sans-serif;
+    cursor: pointer;
+  }
+
+  /* ── DESKTOP overrides ── */
+  @media (min-width: 768px) {
+    nav { padding: 18px 48px; }
+    .logo { font-size: 22px; }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 400;
+    }
+
+    .hero {
+      padding: 140px 48px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-btns { flex-wrap: nowrap; }
+    .btn-primary, .btn-secondary { flex: none; min-width: auto; }
+
+    .hero h1 { font-size: clamp(38px, 4.5vw, 58px); }
+
+    .hero-featured { display: none; }
+
+    /* En desktop mostramos la grilla normal dentro del hero */
+    .hero-visual-desktop {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .section { padding: 60px 0 20px; }
+
+    .products-scroll {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      overflow-x: visible;
+      padding: 4px 48px 16px;
+      gap: 16px;
+    }
+
+    .pcard {
+      width: auto;
+      scroll-snap-align: none;
+    }
+
+    .pcard-img { height: 140px; }
+    .pcard-name { font-size: 15px; }
+    .pcard-price { font-size: 18px; }
+
+    .section-header { padding: 0 48px; }
+    .promo-banner { margin: 8px 48px 60px; }
+  }
 
   /* ── OVERLAY ── */
   #blur-layer {
@@ -96,7 +384,7 @@
     backdrop-filter: blur(20px) brightness(.97);
     -webkit-backdrop-filter: blur(20px) brightness(.97);
     background: rgba(246,247,249,0.25);
-    transition: opacity 1.1s cubic-bezier(.4,0,.2,1);
+    transition: opacity .3s;
   }
 
   #lens-canvas {
@@ -104,10 +392,8 @@
     inset: 0;
     z-index: 10000;
     pointer-events: none;
-    cursor: none;
   }
 
-  /* Logo centrado */
   #intro-logo {
     position: fixed;
     top: 50%;
@@ -116,10 +402,11 @@
     z-index: 10001;
     text-align: center;
     pointer-events: none;
-    transition: opacity .5s ease, transform .5s ease;
+    transition: opacity .5s ease, transform .6s cubic-bezier(.2,0,0,1);
   }
+
   #intro-logo .logotype {
-    font-size: 56px;
+    font-size: clamp(40px, 12vw, 64px);
     font-weight: 700;
     letter-spacing: -.04em;
     color: var(--ink);
@@ -127,9 +414,11 @@
     transform: translateY(10px);
     animation: fadeUp .9s .2s cubic-bezier(.2,0,0,1) forwards;
   }
+
   #intro-logo .logotype span { color: var(--mint); }
+
   #intro-logo .logo-sub {
-    font-size: 12px;
+    font-size: clamp(10px, 3vw, 13px);
     font-weight: 400;
     letter-spacing: .2em;
     text-transform: uppercase;
@@ -138,19 +427,19 @@
     animation: fadeUp .9s .5s cubic-bezier(.2,0,0,1) forwards;
     margin-top: 8px;
   }
+
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-  /* Hint — invisible hasta primer movimiento */
   #intro-hint {
     position: fixed;
-    bottom: 44px;
+    bottom: 36px;
     left: 50%;
     transform: translateX(-50%) translateY(10px);
     z-index: 10002;
     font-size: 13px;
     font-weight: 500;
     color: rgba(15,17,21,.5);
-    letter-spacing: .04em;
+    letter-spacing: .03em;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -159,40 +448,42 @@
     opacity: 0;
     transition: opacity .6s ease, transform .6s ease;
   }
+
   #intro-hint.visible {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
-    animation: hintFloat 2.5s 0.6s ease-in-out infinite;
+    animation: hintFloat 2.5s .6s ease-in-out infinite;
   }
+
   @keyframes hintFloat {
     0%,100% { transform: translateX(-50%) translateY(0); }
     50% { transform: translateX(-50%) translateY(-5px); }
   }
+
   .hint-pill {
     background: rgba(86,215,184,.12);
     border: 1px solid rgba(86,215,184,.3);
     color: #0B7A63;
-    padding: 6px 14px;
+    padding: 7px 16px;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: .06em;
   }
 </style>
 </head>
 <body>
 
-<!-- PÁGINA -->
 <nav>
   <div class="logo">LUMIR<span>A</span></div>
-  <ul>
+  <ul class="nav-links">
     <li><a href="#">Marcos</a></li>
     <li><a href="#">Lentes de sol</a></li>
     <li><a href="#">Probador AR</a></li>
-    <li><a href="#" class="nav-cta">Comprar</a></li>
   </ul>
+  <a href="#" class="nav-cta">Comprar</a>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
   <div>
     <p class="hero-eyebrow">Probador virtual en tiempo real</p>
@@ -204,8 +495,10 @@
     </div>
     <div class="ar-badge"><div class="ar-dot"></div>AR activo · sin instalar nada</div>
   </div>
-  <div class="hero-visual">
-    <div class="product-card">
+
+  <!-- Solo desktop -->
+  <div class="hero-visual-desktop" style="display:none">
+    <div style="background:linear-gradient(135deg,#0F1115,#1A1D24);border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;color:white;grid-column:1/-1">
       <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
         <rect x="2" y="8" width="30" height="22" rx="8" stroke="#56D7B8" stroke-width="2.5" fill="none"/>
         <rect x="48" y="8" width="30" height="22" rx="8" stroke="#56D7B8" stroke-width="2.5" fill="none"/>
@@ -213,37 +506,52 @@
       </svg>
       <div>
         <div class="card-badge">Más vendido</div>
-        <div class="card-name" style="color:white">Nordic Slim</div>
+        <div class="card-name">Nordic Slim</div>
         <div class="card-price">$28.900</div>
       </div>
     </div>
-    <div class="product-card">
+    <div style="background:white;border-radius:14px;padding:18px;border:1px solid var(--border)">
       <div class="card-badge">Receta</div>
-      <div class="card-name">Oval Classic</div>
-      <div class="card-price-small">$22.500</div>
-      <div class="card-sub">Marco titanio</div>
+      <div class="card-name" style="color:var(--ink)">Oval Classic</div>
+      <div style="font-size:20px;font-weight:700;color:var(--ink)">$22.500</div>
     </div>
-    <div class="product-card">
+    <div style="background:white;border-radius:14px;padding:18px;border:1px solid var(--border)">
       <div class="card-badge">Sol</div>
-      <div class="card-name">Wave 90s</div>
-      <div class="card-price-small">$19.800</div>
-      <div class="card-sub">Acetato italiano</div>
+      <div class="card-name" style="color:var(--ink)">Wave 90s</div>
+      <div style="font-size:20px;font-weight:700;color:var(--ink)">$19.800</div>
     </div>
   </div>
 </div>
 
+<!-- FEATURED — solo mobile -->
+<div class="hero-featured">
+  <div class="featured-card">
+    <svg class="featured-glasses" width="72" height="38" viewBox="0 0 80 40" fill="none">
+      <rect x="2" y="8" width="30" height="22" rx="8" stroke="#56D7B8" stroke-width="2.5" fill="none"/>
+      <rect x="48" y="8" width="30" height="22" rx="8" stroke="#56D7B8" stroke-width="2.5" fill="none"/>
+      <path d="M32 19 Q40 15 48 19" stroke="#56D7B8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <div class="card-badge">Más vendido</div>
+      <div class="card-name">Nordic Slim</div>
+      <div class="card-price">$28.900</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTOS -->
 <div class="section">
   <div class="section-header">
     <div>
       <p class="section-label">Catálogo</p>
       <h2 class="section-title">Nuevos ingresos</h2>
     </div>
-    <a href="#" style="font-size:14px;color:var(--mint);text-decoration:none;font-weight:500">Ver todos →</a>
+    <a href="#" class="section-link">Ver todos →</a>
   </div>
-  <div class="products-grid">
+  <div class="products-scroll">
     <div class="pcard">
       <div class="pcard-img">
-        <svg width="100" height="48" viewBox="0 0 100 48" fill="none">
+        <svg width="80" height="44" viewBox="0 0 100 48" fill="none">
           <rect x="3" y="10" width="38" height="28" rx="10" stroke="#56D7B8" stroke-width="2" fill="rgba(86,215,184,.08)"/>
           <rect x="59" y="10" width="38" height="28" rx="10" stroke="#56D7B8" stroke-width="2" fill="rgba(86,215,184,.08)"/>
           <path d="M41 24 Q50 19 59 24" stroke="#56D7B8" stroke-width="2" fill="none" stroke-linecap="round"/>
@@ -258,7 +566,7 @@
     </div>
     <div class="pcard">
       <div class="pcard-img">
-        <svg width="100" height="48" viewBox="0 0 100 48" fill="none">
+        <svg width="80" height="44" viewBox="0 0 100 48" fill="none">
           <rect x="3" y="12" width="38" height="24" rx="4" stroke="#0F1115" stroke-width="2" fill="rgba(15,17,21,.06)"/>
           <rect x="59" y="12" width="38" height="24" rx="4" stroke="#0F1115" stroke-width="2" fill="rgba(15,17,21,.06)"/>
           <path d="M41 24 Q50 21 59 24" stroke="#0F1115" stroke-width="2" fill="none" stroke-linecap="round"/>
@@ -273,7 +581,7 @@
     </div>
     <div class="pcard">
       <div class="pcard-img">
-        <svg width="100" height="48" viewBox="0 0 100 48" fill="none">
+        <svg width="80" height="44" viewBox="0 0 100 48" fill="none">
           <ellipse cx="22" cy="24" rx="19" ry="13" stroke="#F7E998" stroke-width="2" fill="rgba(247,233,152,.12)"/>
           <ellipse cx="78" cy="24" rx="19" ry="13" stroke="#F7E998" stroke-width="2" fill="rgba(247,233,152,.12)"/>
           <path d="M41 24 Q50 21 59 24" stroke="#F7E998" stroke-width="2" fill="none" stroke-linecap="round"/>
@@ -288,7 +596,7 @@
     </div>
     <div class="pcard">
       <div class="pcard-img">
-        <svg width="100" height="48" viewBox="0 0 100 48" fill="none">
+        <svg width="80" height="44" viewBox="0 0 100 48" fill="none">
           <rect x="3" y="10" width="38" height="28" rx="14" stroke="#56D7B8" stroke-width="2" fill="rgba(86,215,184,.08)"/>
           <rect x="59" y="10" width="38" height="28" rx="14" stroke="#56D7B8" stroke-width="2" fill="rgba(86,215,184,.08)"/>
           <path d="M41 24 Q50 19 59 24" stroke="#56D7B8" stroke-width="2" fill="none" stroke-linecap="round"/>
@@ -304,6 +612,13 @@
   </div>
 </div>
 
+<!-- PROMO AR -->
+<div class="promo-banner">
+  <h3>Probate los lentes<br>antes de comprar 👓</h3>
+  <p>Usá la cámara de tu celular para ver cómo te queda cada marco en tiempo real. Sin descargar nada.</p>
+  <button class="promo-cta">Abrir probador AR</button>
+</div>
+
 <!-- OVERLAY -->
 <div id="blur-layer"></div>
 <canvas id="lens-canvas"></canvas>
@@ -315,7 +630,6 @@
 
 <div id="intro-hint">
   <span class="hint-pill">👓 Poné los lentes</span>
-  para descubrir la tienda
 </div>
 
 <script>
@@ -333,29 +647,24 @@
   resize();
   window.addEventListener('resize', resize);
 
-  // Estados: 'waiting' → 'lenses_appear' → 'lenses_idle' → 'expanding' → 'done'
   let state = 'waiting';
-
-  // Posición del cursor/touch
   let curX = W / 2, curY = H / 2;
-  let lensX = W / 2, lensY = H / 2; // posición suavizada
-
-  // Progreso de aparición de los lentes (0→1)
+  let lensX = W / 2, lensY = H / 2;
   let appearProgress = 0;
-  // Progreso de expansión (0→1)
   let expandProgress = 0;
-
   let lastTime = null;
-  let interacted = false;   // primer movimiento
-  let clicked = false;      // click para revelar
+  let interacted = false;
 
   const MINT = '#56D7B8';
   const BUTTER = '#F7E998';
 
-  // ── Helpers ──────────────────────────────────────────────
+  // Escala base según tamaño de pantalla
+  function baseScale() {
+    return W < 480 ? 0.72 : W < 768 ? 0.88 : 1;
+  }
+
   function easeOutExpo(t) { return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t); }
   function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-  function easeInOutQuart(t) { return t < 0.5 ? 8*t*t*t*t : 1-Math.pow(-2*t+2,4)/2; }
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   function roundRect(ctx, x, y, w, h, r) {
@@ -371,12 +680,11 @@
     ctx.closePath();
   }
 
-  // ── Dibuja los lentes ─────────────────────────────────────
   function drawGlasses(cx, cy, scale, alpha, glowAmt) {
     ctx.save();
     ctx.globalAlpha = alpha;
     ctx.translate(cx, cy);
-    ctx.scale(scale, scale);
+    ctx.scale(scale * baseScale(), scale * baseScale());
 
     const lw = 110, lh = 64, gap = 22, rx = 20, sw = 3;
     const lLeft = -lw - gap / 2;
@@ -391,25 +699,21 @@
     ctx.strokeStyle = MINT;
     ctx.lineWidth = sw;
 
-    // Lente izquierdo
     ctx.beginPath();
     roundRect(ctx, lLeft, ly, lw, lh, rx);
     ctx.stroke();
 
-    // Lente derecho
     ctx.beginPath();
     roundRect(ctx, lRight, ly, lw, lh, rx);
     ctx.stroke();
 
     ctx.shadowBlur = 0;
 
-    // Puente
     ctx.beginPath();
     ctx.moveTo(lLeft + lw, 2);
     ctx.bezierCurveTo(lLeft + lw + 5, -8, lRight - 5, -8, lRight, 2);
     ctx.stroke();
 
-    // Patillas
     ctx.lineWidth = sw - 0.8;
     ctx.beginPath();
     ctx.moveTo(lLeft, ly + lh * 0.42);
@@ -421,7 +725,6 @@
     ctx.bezierCurveTo(lRight + lw + 18, ly + lh * 0.42, lRight + lw + 46, ly + lh * 0.65, lRight + lw + 60, ly + lh * 1.05);
     ctx.stroke();
 
-    // Puntos butter en esquinas superiores
     ctx.fillStyle = BUTTER;
     ctx.shadowColor = 'transparent';
     [[lLeft + rx, ly + 4], [lLeft + lw - rx, ly + 4],
@@ -434,7 +737,6 @@
     ctx.restore();
   }
 
-  // ── Loop principal ────────────────────────────────────────
   function loop(ts) {
     if (!lastTime) lastTime = ts;
     const dt = Math.min((ts - lastTime) / 1000, 0.05);
@@ -443,43 +745,29 @@
     ctx.clearRect(0, 0, W, H);
 
     if (state === 'waiting') {
-      // No dibuja nada — solo blur + logo
+      // nada
 
     } else if (state === 'lenses_appear') {
-      // Lentes aparecen desde el cursor siguiendo el movimiento
-      lensX = lerp(lensX, curX, 0.12);
-      lensY = lerp(lensY, curY, 0.12);
-
+      lensX = lerp(lensX, curX, 0.14);
+      lensY = lerp(lensY, curY, 0.14);
       appearProgress = Math.min(1, appearProgress + dt * 2.2);
       const sc = 0.4 + easeOutCubic(appearProgress) * 0.6;
-      const al = easeOutCubic(appearProgress);
-      drawGlasses(lensX, lensY, sc, al, al * 0.7);
-
+      drawGlasses(lensX, lensY, sc, easeOutCubic(appearProgress), easeOutCubic(appearProgress) * 0.7);
       if (appearProgress >= 1) state = 'lenses_idle';
 
     } else if (state === 'lenses_idle') {
-      // Lentes siguen el cursor suavemente
       lensX = lerp(lensX, curX, 0.1);
       lensY = lerp(lensY, curY, 0.1);
-
       const t = ts / 1000;
-      const breathe = 1 + Math.sin(t * 1.2) * 0.015;
-      const glow = 0.35 + Math.sin(t * 1.8) * 0.15;
-      drawGlasses(lensX, lensY, breathe, 1, glow);
+      drawGlasses(lensX, lensY, 1 + Math.sin(t * 1.2) * 0.015, 1, 0.35 + Math.sin(t * 1.8) * 0.15);
 
     } else if (state === 'expanding') {
       expandProgress = Math.min(1, expandProgress + dt * 0.85);
       const ep = easeOutExpo(expandProgress);
+      drawGlasses(lensX, lensY, 1 + ep * 20, 1 - easeOutCubic(expandProgress), 1 - expandProgress);
 
-      // Los lentes se escalan y desvanecen
-      const sc = 1 + ep * 20;
-      const al = 1 - easeOutCubic(expandProgress);
-      drawGlasses(lensX, lensY, sc, al, 1 - expandProgress);
-
-      // Ring glow
       if (expandProgress < 0.55) {
-        const ringAlpha = (1 - expandProgress / 0.55) * 0.12;
-        const maxR = Math.sqrt(W * W + H * H);
+        const ringAlpha = (1 - expandProgress / 0.55) * 0.1;
         ctx.save();
         ctx.globalAlpha = ringAlpha;
         ctx.strokeStyle = MINT;
@@ -487,21 +775,17 @@
         ctx.shadowColor = MINT;
         ctx.shadowBlur = 80;
         ctx.beginPath();
-        ctx.arc(lensX, lensY, ep * maxR * 0.5, 0, Math.PI * 2);
+        ctx.arc(lensX, lensY, ep * Math.sqrt(W*W+H*H) * 0.5, 0, Math.PI * 2);
         ctx.stroke();
         ctx.restore();
       }
 
-      // Blur se levanta
       const blurVal = Math.max(0, 20 * (1 - easeOutCubic(expandProgress)));
       blurLayer.style.backdropFilter = `blur(${blurVal}px)`;
       blurLayer.style.webkitBackdropFilter = `blur(${blurVal}px)`;
       blurLayer.style.opacity = 1 - easeOutCubic(expandProgress);
-
-      // Logo e hint se van
-      const fadeOut = Math.max(0, 1 - expandProgress * 3);
-      introLogo.style.opacity = fadeOut;
-      introHint.style.opacity = fadeOut;
+      introLogo.style.opacity = Math.max(0, 1 - expandProgress * 3);
+      introHint.style.opacity = Math.max(0, 1 - expandProgress * 3);
 
       if (expandProgress >= 1) {
         state = 'done';
@@ -518,65 +802,35 @@
 
   requestAnimationFrame(loop);
 
-  // ── Eventos ───────────────────────────────────────────────
-
-  // Primer movimiento de mouse → aparecen los lentes + hint
-  document.addEventListener('mousemove', (e) => {
-    curX = e.clientX;
-    curY = e.clientY;
-
+  function startInteraction(x, y) {
+    curX = x; curY = y;
     if (!interacted && state === 'waiting') {
       interacted = true;
       state = 'lenses_appear';
-      lensX = curX;
-      lensY = curY;
+      lensX = x; lensY = y;
       appearProgress = 0;
-      // Mostrar hint
       introHint.classList.add('visible');
-      // Logo sube un poco
-      introLogo.style.transform = 'translate(-50%, -60%)';
-      introLogo.style.transition = 'transform .6s cubic-bezier(.2,0,0,1)';
+      introLogo.style.transform = 'translate(-50%, -62%)';
     }
-  });
+  }
 
-  // Touch → mismo efecto
+  function triggerReveal() {
+    if (state === 'lenses_idle' || state === 'lenses_appear') {
+      state = 'expanding';
+      expandProgress = 0;
+    }
+  }
+
+  document.addEventListener('mousemove', (e) => startInteraction(e.clientX, e.clientY));
   document.addEventListener('touchstart', (e) => {
-    const t = e.touches[0];
-    curX = t.clientX;
-    curY = t.clientY;
-
-    if (!interacted && state === 'waiting') {
-      interacted = true;
-      state = 'lenses_appear';
-      lensX = curX;
-      lensY = curY;
-      appearProgress = 0;
-      introHint.classList.add('visible');
-      introLogo.style.transform = 'translate(-50%, -60%)';
-      introLogo.style.transition = 'transform .6s cubic-bezier(.2,0,0,1)';
-    }
+    startInteraction(e.touches[0].clientX, e.touches[0].clientY);
   }, { passive: true });
-
   document.addEventListener('touchmove', (e) => {
-    const t = e.touches[0];
-    curX = t.clientX;
-    curY = t.clientY;
+    curX = e.touches[0].clientX;
+    curY = e.touches[0].clientY;
   }, { passive: true });
-
-  // Click/tap → reveal
-  document.addEventListener('click', () => {
-    if (state === 'lenses_idle' || state === 'lenses_appear') {
-      state = 'expanding';
-      expandProgress = 0;
-    }
-  });
-
-  document.addEventListener('touchend', () => {
-    if (state === 'lenses_idle' || state === 'lenses_appear') {
-      state = 'expanding';
-      expandProgress = 0;
-    }
-  });
+  document.addEventListener('click', triggerReveal);
+  document.addEventListener('touchend', triggerReveal);
 </script>
 </body>
 </html>
