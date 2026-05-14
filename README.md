@@ -1,2 +1,2 @@
-# LUMIRA
+# LUMMA
 Preview e-commerce
