@@ -19,32 +19,21 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Satoshi', sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  body { font-family: 'Satoshi', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; overflow-x: hidden; }
 
   /* ── TRANSICIÓN BLUR ── */
   #transition-blur {
     position: fixed; inset: 0; z-index: 8000;
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-    background: rgba(246,247,249,0);
-    pointer-events: none; opacity: 0;
+    backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
+    background: rgba(246,247,249,0); pointer-events: none; opacity: 0;
   }
   #transition-blur.blurring {
     opacity: 1;
-    backdrop-filter: blur(24px) brightness(.96);
-    -webkit-backdrop-filter: blur(24px) brightness(.96);
+    backdrop-filter: blur(24px) brightness(.96); -webkit-backdrop-filter: blur(24px) brightness(.96);
     background: rgba(246,247,249,0.4);
     transition: backdrop-filter .35s ease, opacity .35s ease;
   }
 
-  /* ── VISTAS ── */
   .view { display: none; min-height: 100vh; }
   .view.active { display: block; }
   #view-ar.active { display: flex; }
@@ -52,10 +41,8 @@
   /* ══ TIENDA ══ */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 16px 20px;
-    display: flex; justify-content: space-between; align-items: center;
-    background: rgba(246,247,249,0.88);
-    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+    background: rgba(246,247,249,0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
   .logo { font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
@@ -71,19 +58,9 @@
   .hero p { font-size: 16px; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
   .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
 
-  .btn-primary {
-    background: var(--mint); color: var(--ink); border: none;
-    padding: 13px 24px; font-size: 14px; font-weight: 600;
-    font-family: 'Satoshi', sans-serif; border-radius: 10px; cursor: pointer;
-    flex: 1; min-width: 140px; transition: transform .15s;
-  }
+  .btn-primary { background: var(--mint); color: var(--ink); border: none; padding: 13px 24px; font-size: 14px; font-weight: 600; font-family: 'Satoshi', sans-serif; border-radius: 10px; cursor: pointer; flex: 1; min-width: 140px; transition: transform .15s; }
   .btn-primary:active { transform: scale(.97); }
-  .btn-secondary {
-    background: transparent; color: var(--ink); border: 1.5px solid rgba(0,0,0,.12);
-    padding: 13px 24px; font-size: 14px; font-weight: 500;
-    font-family: 'Satoshi', sans-serif; border-radius: 10px; cursor: pointer;
-    flex: 1; min-width: 140px;
-  }
+  .btn-secondary { background: transparent; color: var(--ink); border: 1.5px solid rgba(0,0,0,.12); padding: 13px 24px; font-size: 14px; font-weight: 500; font-family: 'Satoshi', sans-serif; border-radius: 10px; cursor: pointer; flex: 1; min-width: 140px; }
 
   .ar-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; background: var(--mint-soft); color: #0B7A63; padding: 5px 12px; border-radius: 20px; margin-top: 20px; }
   .ar-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); animation: pulse 1.5s infinite; }
@@ -119,39 +96,75 @@
   .promo-cta:active { transform: scale(.97); }
 
   /* ══ PROBADOR AR ══ */
-  #view-ar {
-    background: #0a0c0f;
-    min-height: 100vh;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
+  #view-ar { background: #0a0c0f; min-height: 100vh; flex-direction: column; position: relative; overflow: hidden; }
+
+  /* Video de cámara real */
+  #ar-video {
+    position: absolute; inset: 0; z-index: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1); /* espejo */
+    display: none;
   }
 
   .ar-camera-bg {
-    position: absolute; inset: 0;
+    position: absolute; inset: 0; z-index: 0;
     background: radial-gradient(ellipse 60% 80% at 50% 38%, #162820 0%, #0a0c0f 100%);
-    z-index: 0;
+    transition: opacity .6s ease;
   }
 
-  .face-silhouette {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -54%); z-index: 1; opacity: .1;
-  }
+  .face-silhouette { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-54%); z-index: 1; opacity: .1; transition: opacity .6s ease; }
 
   #ar-canvas { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 
-  .ar-top-bar {
-    position: relative; z-index: 10;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 52px 20px 16px;
+  /* Pantalla de permiso cámara */
+  #cam-permission {
+    position: absolute; inset: 0; z-index: 5;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px 32px; text-align: center;
+    background: rgba(10,12,15,0.85);
+    backdrop-filter: blur(8px);
+    transition: opacity .5s ease;
   }
-  .ar-back {
-    width: 40px; height: 40px; background: rgba(255,255,255,.1);
-    border: 1px solid rgba(255,255,255,.15); border-radius: 50%;
+  #cam-permission.hidden { opacity: 0; pointer-events: none; }
+
+  .cam-icon {
+    width: 72px; height: 72px;
+    background: rgba(86,215,184,.1);
+    border: 1.5px solid rgba(86,215,184,.3);
+    border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: white; font-size: 18px;
-    backdrop-filter: blur(8px); transition: background .2s;
+    font-size: 30px; margin-bottom: 24px;
   }
+
+  #cam-permission h3 { font-size: 20px; font-weight: 700; color: white; margin-bottom: 10px; }
+  #cam-permission p { font-size: 14px; color: rgba(255,255,255,.5); line-height: 1.7; margin-bottom: 28px; max-width: 280px; }
+
+  .cam-btn {
+    background: var(--mint); color: var(--ink);
+    border: none; padding: 14px 32px; border-radius: 12px;
+    font-size: 15px; font-weight: 700; font-family: 'Satoshi', sans-serif;
+    cursor: pointer; transition: transform .15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cam-btn:active { transform: scale(.97); }
+
+  .cam-skip {
+    margin-top: 16px; font-size: 13px; color: rgba(255,255,255,.3);
+    cursor: pointer; text-decoration: underline; background: none; border: none;
+    font-family: 'Satoshi', sans-serif;
+  }
+
+  /* Error cámara */
+  #cam-error {
+    position: absolute; bottom: 200px; left: 50%; transform: translateX(-50%);
+    z-index: 6; background: rgba(255,71,71,.15); border: 1px solid rgba(255,71,71,.35);
+    border-radius: 12px; padding: 12px 18px; font-size: 13px; color: #ff8080;
+    text-align: center; display: none; max-width: 280px;
+  }
+
+  .ar-top-bar { position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 52px 20px 16px; }
+  .ar-back { width: 40px; height: 40px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: white; font-size: 18px; backdrop-filter: blur(8px); transition: background .2s; }
   .ar-back:active { background: rgba(255,255,255,.2); }
   .ar-logo { font-size: 17px; font-weight: 700; letter-spacing: -.02em; color: white; }
   .ar-logo span { color: var(--mint); }
@@ -160,25 +173,11 @@
   @keyframes recPulse { 0%,100%{opacity:1} 50%{opacity:.3} }
   .ar-rec span { font-size: 11px; font-weight: 600; color: var(--red); letter-spacing: .08em; }
 
-  .ar-face-guide {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -54%); z-index: 3;
-    width: min(260px, 68vw); height: min(320px, 84vw);
-  }
-
-  .tracking-dot {
-    position: absolute; width: 5px; height: 5px; border-radius: 50%;
-    background: var(--mint); opacity: 0; animation: trackFade 2.5s infinite;
-  }
+  .ar-face-guide { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-54%); z-index: 3; width: min(260px,68vw); height: min(320px,84vw); }
+  .tracking-dot { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--mint); opacity: 0; animation: trackFade 2.5s infinite; }
   @keyframes trackFade { 0%{opacity:0;transform:scale(.5)} 30%{opacity:.8;transform:scale(1)} 70%{opacity:.8;transform:scale(1)} 100%{opacity:0;transform:scale(.5)} }
 
-  .ar-status {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, 118px); z-index: 10;
-    display: flex; align-items: center; gap: 6px;
-    background: rgba(86,215,184,.1); border: 1px solid rgba(86,215,184,.25);
-    border-radius: 20px; padding: 6px 14px; backdrop-filter: blur(8px);
-  }
+  .ar-status { position: absolute; top: 50%; left: 50%; transform: translate(-50%,118px); z-index: 10; display: flex; align-items: center; gap: 6px; background: rgba(86,215,184,.1); border: 1px solid rgba(86,215,184,.25); border-radius: 20px; padding: 6px 14px; backdrop-filter: blur(8px); }
   .ar-status span { font-size: 11px; font-weight: 600; color: var(--mint); letter-spacing: .06em; }
 
   .ar-bottom-panel { position: relative; z-index: 10; margin-top: auto; padding: 0 0 32px; }
@@ -188,14 +187,7 @@
 
   .ar-frames-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 4px 20px 8px; scrollbar-width: none; scroll-snap-type: x mandatory; }
   .ar-frames-scroll::-webkit-scrollbar { display: none; }
-
-  .ar-frame-chip {
-    flex-shrink: 0; scroll-snap-align: start;
-    background: rgba(255,255,255,.07); border: 1.5px solid rgba(255,255,255,.1);
-    border-radius: 14px; padding: 10px 14px; cursor: pointer;
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    min-width: 82px; transition: all .2s;
-  }
+  .ar-frame-chip { flex-shrink: 0; scroll-snap-align: start; background: rgba(255,255,255,.07); border: 1.5px solid rgba(255,255,255,.1); border-radius: 14px; padding: 10px 14px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 82px; transition: all .2s; }
   .ar-frame-chip.selected { background: rgba(86,215,184,.12); border-color: var(--mint); box-shadow: 0 0 18px rgba(86,215,184,.15); }
   .ar-frame-chip:active { transform: scale(.95); }
   .ar-frame-name { font-size: 10px; font-weight: 600; color: rgba(255,255,255,.65); white-space: nowrap; }
@@ -208,20 +200,9 @@
   .ar-selected-price { font-size: 22px; font-weight: 700; color: var(--butter); }
 
   .ar-buy-bar { margin: 0 20px; display: flex; gap: 10px; align-items: center; }
-  .ar-buy-btn {
-    flex: 1; background: var(--mint); color: var(--ink); border: none;
-    padding: 15px 20px; border-radius: 12px; font-size: 15px; font-weight: 700;
-    font-family: 'Satoshi', sans-serif; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: transform .15s;
-  }
+  .ar-buy-btn { flex: 1; background: var(--mint); color: var(--ink); border: none; padding: 15px 20px; border-radius: 12px; font-size: 15px; font-weight: 700; font-family: 'Satoshi', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform .15s; }
   .ar-buy-btn:active { transform: scale(.97); }
-  .ar-wishlist {
-    width: 50px; height: 50px; background: rgba(255,255,255,.07);
-    border: 1.5px solid rgba(255,255,255,.12); border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 20px; transition: background .2s; flex-shrink: 0;
-  }
+  .ar-wishlist { width: 50px; height: 50px; background: rgba(255,255,255,.07); border: 1.5px solid rgba(255,255,255,.12); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: background .2s; flex-shrink: 0; }
   .ar-wishlist:active { background: rgba(255,255,255,.18); }
 
   /* ══ DESKTOP ══ */
@@ -241,8 +222,6 @@
     .pcard-img { height: 140px; }
     .section-header { padding: 0 48px; }
     .promo-banner { margin: 8px 48px 60px; }
-    .ar-face-guide { width: 280px; height: 340px; }
-    .ar-status { transform: translate(-50%, 140px); }
   }
 
   /* ══ INTRO ══ */
@@ -337,9 +316,11 @@
 
 <!-- ══ PROBADOR AR ══ -->
 <div id="view-ar" class="view">
-  <div class="ar-camera-bg"></div>
 
-  <svg class="face-silhouette" width="200" height="260" viewBox="0 0 200 260" fill="none">
+  <video id="ar-video" autoplay playsinline muted></video>
+  <div class="ar-camera-bg" id="ar-bg"></div>
+
+  <svg class="face-silhouette" id="face-sil" width="200" height="260" viewBox="0 0 200 260" fill="none">
     <ellipse cx="100" cy="120" rx="72" ry="88" stroke="white" stroke-width="1.5" fill="none"/>
     <ellipse cx="100" cy="220" rx="44" ry="28" stroke="white" stroke-width="1" fill="none" opacity=".5"/>
     <line x1="100" y1="208" x2="100" y2="195" stroke="white" stroke-width="1" opacity=".4"/>
@@ -347,15 +328,27 @@
 
   <canvas id="ar-canvas"></canvas>
 
+  <!-- Pantalla de permiso -->
+  <div id="cam-permission">
+    <div class="cam-icon">📷</div>
+    <h3>Activar cámara</h3>
+    <p>Necesitamos acceso a tu cámara para que puedas probarte los marcos en tiempo real.</p>
+    <button class="cam-btn" onclick="requestCamera()">
+      <span>📷</span> Activar cámara
+    </button>
+    <button class="cam-skip" onclick="skipCamera()">Continuar sin cámara</button>
+  </div>
+
+  <div id="cam-error">No se pudo acceder a la cámara.<br>Revisá los permisos del navegador.</div>
+
   <div class="ar-top-bar">
     <div class="ar-back" onclick="closeAR()">←</div>
     <div class="ar-logo">LUMIR<span>A</span></div>
-    <div class="ar-rec"><div class="ar-rec-dot"></div><span>AR ACTIVO</span></div>
+    <div class="ar-rec"><div class="ar-rec-dot"></div><span id="rec-label">AR ACTIVO</span></div>
   </div>
 
   <div class="ar-face-guide" id="tracking-container"></div>
-
-  <div class="ar-status"><div class="ar-dot"></div><span>CARA DETECTADA</span></div>
+  <div class="ar-status"><div class="ar-dot"></div><span id="ar-status-text">CARA DETECTADA</span></div>
 
   <div class="ar-bottom-panel">
     <div class="ar-selected-info">
@@ -416,13 +409,8 @@
 const transBlur = document.getElementById('transition-blur');
 
 function blurTransition(cb) {
-  transBlur.style.transition = 'none';
-  transBlur.style.opacity = '0';
   transBlur.classList.add('blurring');
-  setTimeout(() => {
-    cb();
-    setTimeout(() => { transBlur.classList.remove('blurring'); }, 380);
-  }, 330);
+  setTimeout(() => { cb(); setTimeout(() => transBlur.classList.remove('blurring'), 380); }, 330);
 }
 
 function openAR(e) {
@@ -436,6 +424,7 @@ function openAR(e) {
 }
 
 function closeAR() {
+  stopCamera();
   blurTransition(() => {
     document.getElementById('view-ar').classList.remove('active');
     document.getElementById('view-store').classList.add('active');
@@ -444,9 +433,69 @@ function closeAR() {
   });
 }
 
-// ══ SELECTOR DE MARCOS ══
+// ══ CÁMARA ══
+const video = document.getElementById('ar-video');
+const arBg = document.getElementById('ar-bg');
+const faceSil = document.getElementById('face-sil');
+const camPerm = document.getElementById('cam-permission');
+const camError = document.getElementById('cam-error');
+let cameraActive = false;
+let camStream = null;
+
+async function requestCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } }
+    });
+    camStream = stream;
+    video.srcObject = stream;
+    video.style.display = 'block';
+    cameraActive = true;
+
+    // Ocultar pantalla de permiso
+    camPerm.classList.add('hidden');
+    setTimeout(() => camPerm.style.display = 'none', 500);
+
+    // Fade out fondo falso y silueta
+    arBg.style.opacity = '0';
+    faceSil.style.opacity = '0';
+    setTimeout(() => { arBg.style.display = 'none'; faceSil.style.display = 'none'; }, 600);
+
+    // Actualizar status
+    document.getElementById('ar-status-text').textContent = 'CÁMARA ACTIVA';
+    document.getElementById('rec-label').textContent = 'EN VIVO';
+
+  } catch (err) {
+    camError.style.display = 'block';
+    setTimeout(() => camError.style.display = 'none', 4000);
+    console.warn('Camera error:', err);
+  }
+}
+
+function skipCamera() {
+  camPerm.classList.add('hidden');
+  setTimeout(() => camPerm.style.display = 'none', 500);
+}
+
+function stopCamera() {
+  if (camStream) {
+    camStream.getTracks().forEach(t => t.stop());
+    camStream = null;
+  }
+  video.style.display = 'none';
+  cameraActive = false;
+  // Restaurar fondo
+  arBg.style.display = '';
+  arBg.style.opacity = '1';
+  faceSil.style.display = '';
+  faceSil.style.opacity = '.1';
+  camPerm.style.display = '';
+  camPerm.classList.remove('hidden');
+}
+
+// ══ SELECTOR ══
 const frameColors = ['#56D7B8','rgba(255,255,255,.85)','#F7E998','rgba(255,255,255,.85)','rgba(255,255,255,.85)','rgba(200,180,255,.85)'];
-const frameRx     = [18, 3, 999, 999, 999, 16]; // radio esquinas por forma
+const frameRx = [18, 3, 999, 999, 999, 16];
 let currentFrame = 0;
 
 function selectFrame(el, name, price, idx) {
@@ -462,147 +511,101 @@ const arCanvas = document.getElementById('ar-canvas');
 const arCtx = arCanvas.getContext('2d');
 let arAnimId = null;
 
-function resizeARCanvas() {
-  arCanvas.width = window.innerWidth;
-  arCanvas.height = window.innerHeight;
-}
+function resizeAR() { arCanvas.width = window.innerWidth; arCanvas.height = window.innerHeight; }
 
-function rrAR(ctx, x, y, w, h, r) {
-  const rv = Math.min(r, h/2, w/2);
+function rrAR(ctx,x,y,w,h,r) {
+  const rv = Math.min(r,h/2,w/2);
   ctx.beginPath();
-  ctx.moveTo(x+rv,y); ctx.lineTo(x+w-rv,y); ctx.quadraticCurveTo(x+w,y,x+w,y+rv);
-  ctx.lineTo(x+w,y+h-rv); ctx.quadraticCurveTo(x+w,y+h,x+w-rv,y+h);
-  ctx.lineTo(x+rv,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-rv);
-  ctx.lineTo(x,y+rv); ctx.quadraticCurveTo(x,y,x+rv,y); ctx.closePath();
+  ctx.moveTo(x+rv,y);ctx.lineTo(x+w-rv,y);ctx.quadraticCurveTo(x+w,y,x+w,y+rv);
+  ctx.lineTo(x+w,y+h-rv);ctx.quadraticCurveTo(x+w,y+h,x+w-rv,y+h);
+  ctx.lineTo(x+rv,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-rv);
+  ctx.lineTo(x,y+rv);ctx.quadraticCurveTo(x,y,x+rv,y);ctx.closePath();
 }
 
 function drawARGlasses(t) {
   const W = arCanvas.width, H = arCanvas.height;
-  arCtx.clearRect(0, 0, W, H);
-
-  const cx = W / 2;
-  const cy = H * 0.37 + Math.sin(t * 0.45) * 2.5;
-  const sc = Math.min(W, H) / 500;
-
-  const lw = 108*sc, lh = 60*sc, gap = 20*sc;
-  const sw = 2.8*sc;
+  arCtx.clearRect(0,0,W,H);
+  const cx = W/2;
+  // Con cámara: lentes más arriba (cara suele estar en el tercio superior)
+  // Sin cámara: centro de pantalla
+  const cy = cameraActive ? H * 0.32 + Math.sin(t*.45)*2 : H * 0.37 + Math.sin(t*.45)*2.5;
+  const sc = Math.min(W,H)/500;
+  const lw=108*sc, lh=60*sc, gap=20*sc, sw=2.8*sc;
   const color = frameColors[currentFrame];
-  const rx = frameRx[currentFrame] === 999 ? lh/2 : frameRx[currentFrame]*sc;
+  const rx = frameRx[currentFrame]===999 ? lh/2 : frameRx[currentFrame]*sc;
+  const lLeft=cx-lw-gap/2, lRight=cx+gap/2, ly=cy-lh/2;
 
-  const lLeft = cx - lw - gap/2;
-  const lRight = cx + gap/2;
-  const ly = cy - lh/2;
+  arCtx.shadowColor=color; arCtx.shadowBlur=14;
+  arCtx.strokeStyle=color; arCtx.lineWidth=sw;
+  rrAR(arCtx,lLeft,ly,lw,lh,rx); arCtx.stroke();
+  rrAR(arCtx,lRight,ly,lw,lh,rx); arCtx.stroke();
+  arCtx.shadowBlur=0;
 
-  arCtx.shadowColor = color;
-  arCtx.shadowBlur = 14;
-  arCtx.strokeStyle = color;
-  arCtx.lineWidth = sw;
-
-  rrAR(arCtx, lLeft, ly, lw, lh, rx); arCtx.stroke();
-  rrAR(arCtx, lRight, ly, lw, lh, rx); arCtx.stroke();
-
-  arCtx.shadowBlur = 0;
-
-  // Puente
   arCtx.beginPath();
-  arCtx.moveTo(lLeft+lw, cy+1*sc);
-  arCtx.bezierCurveTo(lLeft+lw+5*sc, cy-7*sc, lRight-5*sc, cy-7*sc, lRight, cy+1*sc);
+  arCtx.moveTo(lLeft+lw,cy+sc);
+  arCtx.bezierCurveTo(lLeft+lw+5*sc,cy-7*sc,lRight-5*sc,cy-7*sc,lRight,cy+sc);
   arCtx.stroke();
 
-  // Patillas
-  arCtx.lineWidth = sw*.75;
-  arCtx.beginPath();
-  arCtx.moveTo(lLeft, ly+lh*.42);
-  arCtx.bezierCurveTo(lLeft-15*sc, ly+lh*.42, lLeft-42*sc, ly+lh*.68, lLeft-56*sc, ly+lh*1.1);
-  arCtx.stroke();
-  arCtx.beginPath();
-  arCtx.moveTo(lRight+lw, ly+lh*.42);
-  arCtx.bezierCurveTo(lRight+lw+15*sc, ly+lh*.42, lRight+lw+42*sc, ly+lh*.68, lRight+lw+56*sc, ly+lh*1.1);
-  arCtx.stroke();
+  arCtx.lineWidth=sw*.75;
+  arCtx.beginPath();arCtx.moveTo(lLeft,ly+lh*.42);arCtx.bezierCurveTo(lLeft-15*sc,ly+lh*.42,lLeft-42*sc,ly+lh*.68,lLeft-56*sc,ly+lh*1.1);arCtx.stroke();
+  arCtx.beginPath();arCtx.moveTo(lRight+lw,ly+lh*.42);arCtx.bezierCurveTo(lRight+lw+15*sc,ly+lh*.42,lRight+lw+42*sc,ly+lh*.68,lRight+lw+56*sc,ly+lh*1.1);arCtx.stroke();
 
-  // Dots butter
-  arCtx.fillStyle = '#F7E998';
-  arCtx.shadowColor = 'transparent';
-  const dr = 2.8*sc;
-  [[lLeft+Math.min(rx,lw*.3), ly+dr+1],[lLeft+lw-Math.min(rx,lw*.3), ly+dr+1],
-   [lRight+Math.min(rx,lw*.3), ly+dr+1],[lRight+lw-Math.min(rx,lw*.3), ly+dr+1]].forEach(([dx,dy])=>{
-    arCtx.beginPath(); arCtx.arc(dx,dy,dr,0,Math.PI*2); arCtx.fill();
-  });
+  arCtx.fillStyle='#F7E998'; arCtx.shadowColor='transparent';
+  const dr=2.8*sc;
+  [[lLeft+Math.min(rx,lw*.3),ly+dr+1],[lLeft+lw-Math.min(rx,lw*.3),ly+dr+1],[lRight+Math.min(rx,lw*.3),ly+dr+1],[lRight+lw-Math.min(rx,lw*.3),ly+dr+1]].forEach(([dx,dy])=>{arCtx.beginPath();arCtx.arc(dx,dy,dr,0,Math.PI*2);arCtx.fill();});
 
-  // Scan line
-  const spanW = lRight+lw - lLeft + 20*sc;
-  const scanY = ly - lh*.2 + ((t*55) % (lh*1.5));
-  if (scanY > ly-.1*lh && scanY < ly+lh*1.1) {
-    const g = arCtx.createLinearGradient(lLeft-10*sc, 0, lRight+lw+10*sc, 0);
-    g.addColorStop(0,'transparent'); g.addColorStop(.25,'rgba(86,215,184,.1)');
-    g.addColorStop(.75,'rgba(86,215,184,.1)'); g.addColorStop(1,'transparent');
-    arCtx.fillStyle = g;
-    arCtx.fillRect(lLeft-10*sc, scanY, spanW, 1.5);
+  // Scan line solo sin cámara
+  if (!cameraActive) {
+    const scanY = ly-lh*.2+((t*55)%(lh*1.5));
+    if (scanY>ly-.1*lh && scanY<ly+lh*1.1) {
+      const g=arCtx.createLinearGradient(lLeft,0,lRight+lw,0);
+      g.addColorStop(0,'transparent');g.addColorStop(.25,'rgba(86,215,184,.1)');g.addColorStop(.75,'rgba(86,215,184,.1)');g.addColorStop(1,'transparent');
+      arCtx.fillStyle=g; arCtx.fillRect(lLeft-10*sc,scanY,lRight+lw-lLeft+20*sc,1.5);
+    }
   }
 }
 
-function arLoop(ts) {
-  drawARGlasses(ts/1000);
-  arAnimId = requestAnimationFrame(arLoop);
-}
+function arLoop(ts) { drawARGlasses(ts/1000); arAnimId=requestAnimationFrame(arLoop); }
 
 function startARCanvas() {
-  resizeARCanvas();
+  resizeAR();
   if (arAnimId) cancelAnimationFrame(arAnimId);
   arAnimId = requestAnimationFrame(arLoop);
   spawnDots();
 }
 
 function stopARCanvas() {
-  if (arAnimId) { cancelAnimationFrame(arAnimId); arAnimId = null; }
+  if (arAnimId) { cancelAnimationFrame(arAnimId); arAnimId=null; }
   arCtx.clearRect(0,0,arCanvas.width,arCanvas.height);
 }
 
-window.addEventListener('resize', () => { if (arAnimId) resizeARCanvas(); });
+window.addEventListener('resize', () => { if (arAnimId) resizeAR(); });
 
 function spawnDots() {
-  const c = document.getElementById('tracking-container');
-  c.innerHTML = '';
-  const pts = [[28,30],[36,27],[44,30],[36,36],[56,30],[64,27],[72,30],[64,36],[48,52],[45,57],[51,57],[38,70],[50,73],[62,70],[50,66],[18,45],[82,45],[30,18],[70,18]];
-  pts.forEach(([px,py],i)=>{
+  const c=document.getElementById('tracking-container'); c.innerHTML='';
+  [[28,30],[36,27],[44,30],[36,36],[56,30],[64,27],[72,30],[64,36],[48,52],[45,57],[51,57],[38,70],[50,73],[62,70],[50,66],[18,45],[82,45],[30,18],[70,18]].forEach(([px,py],i)=>{
     const d=document.createElement('div'); d.className='tracking-dot';
     d.style.left=px+'%'; d.style.top=py+'%';
-    d.style.animationDelay=(i*.12)+'s';
-    d.style.animationDuration=(2+Math.random()*1.5)+'s';
+    d.style.animationDelay=(i*.12)+'s'; d.style.animationDuration=(2+Math.random()*1.5)+'s';
     c.appendChild(d);
   });
 }
 
 // ══ INTRO ══
-const canvas = document.getElementById('lens-canvas');
-const ctx = canvas.getContext('2d');
-const blurLayer = document.getElementById('blur-layer');
-const introLogo = document.getElementById('intro-logo');
-const introHint = document.getElementById('intro-hint');
+const canvas=document.getElementById('lens-canvas'), ctx=canvas.getContext('2d');
+const blurLayer=document.getElementById('blur-layer'), introLogo=document.getElementById('intro-logo'), introHint=document.getElementById('intro-hint');
 let W,H;
-
-function resizeI(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+function resizeI(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
 resizeI(); window.addEventListener('resize',resizeI);
-
-let istate='waiting', curX=W/2,curY=H/2,lensX=W/2,lensY=H/2;
-let appP=0,expP=0,lt=null,inter=false;
-
+let istate='waiting',curX=W/2,curY=H/2,lensX=W/2,lensY=H/2,appP=0,expP=0,lt=null,inter=false;
 const bs=()=>W<480?.72:W<768?.88:1;
 const eoe=t=>t>=1?1:1-Math.pow(2,-10*t);
 const eoc=t=>1-Math.pow(1-t,3);
 const lp=(a,b,t)=>a+(b-a)*t;
-
-function rrI(ctx,x,y,w,h,r){
-  ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
-}
-
+function rrI(ctx,x,y,w,h,r){ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();}
 function dg(cx,cy,sc,al,gl){
   ctx.save();ctx.globalAlpha=al;ctx.translate(cx,cy);ctx.scale(sc*bs(),sc*bs());
-  const lw=110,lh=64,gap=22,rx=20,sw=3;
-  const lL=-lw-gap/2,lR=gap/2,ly=-lh/2;
+  const lw=110,lh=64,gap=22,rx=20,sw=3,lL=-lw-gap/2,lR=gap/2,ly=-lh/2;
   if(gl>0){ctx.shadowColor='#56D7B8';ctx.shadowBlur=22*gl;}
   ctx.strokeStyle='#56D7B8';ctx.lineWidth=sw;
   ctx.beginPath();rrI(ctx,lL,ly,lw,lh,rx);ctx.stroke();
@@ -616,37 +619,25 @@ function dg(cx,cy,sc,al,gl){
   [[lL+rx,ly+4],[lL+lw-rx,ly+4],[lR+rx,ly+4],[lR+lw-rx,ly+4]].forEach(([dx,dy])=>{ctx.beginPath();ctx.arc(dx,dy,3.5,0,Math.PI*2);ctx.fill();});
   ctx.restore();
 }
-
 function iloop(ts){
   if(!lt)lt=ts;const dt=Math.min((ts-lt)/1000,.05);lt=ts;
   ctx.clearRect(0,0,W,H);
   if(istate==='waiting'){}
-  else if(istate==='lenses_appear'){
-    lensX=lp(lensX,curX,.14);lensY=lp(lensY,curY,.14);
-    appP=Math.min(1,appP+dt*2.2);
-    dg(lensX,lensY,.4+eoc(appP)*.6,eoc(appP),eoc(appP)*.7);
-    if(appP>=1)istate='lenses_idle';
-  } else if(istate==='lenses_idle'){
-    lensX=lp(lensX,curX,.1);lensY=lp(lensY,curY,.1);
-    const t=ts/1000;dg(lensX,lensY,1+Math.sin(t*1.2)*.015,1,.35+Math.sin(t*1.8)*.15);
-  } else if(istate==='expanding'){
+  else if(istate==='lenses_appear'){lensX=lp(lensX,curX,.14);lensY=lp(lensY,curY,.14);appP=Math.min(1,appP+dt*2.2);dg(lensX,lensY,.4+eoc(appP)*.6,eoc(appP),eoc(appP)*.7);if(appP>=1)istate='lenses_idle';}
+  else if(istate==='lenses_idle'){lensX=lp(lensX,curX,.1);lensY=lp(lensY,curY,.1);const t=ts/1000;dg(lensX,lensY,1+Math.sin(t*1.2)*.015,1,.35+Math.sin(t*1.8)*.15);}
+  else if(istate==='expanding'){
     expP=Math.min(1,expP+dt*.85);const ep=eoe(expP);
     dg(lensX,lensY,1+ep*20,1-eoc(expP),1-expP);
     if(expP<.55){ctx.save();ctx.globalAlpha=(1-expP/.55)*.1;ctx.strokeStyle='#56D7B8';ctx.lineWidth=50;ctx.shadowColor='#56D7B8';ctx.shadowBlur=80;ctx.beginPath();ctx.arc(lensX,lensY,ep*Math.sqrt(W*W+H*H)*.5,0,Math.PI*2);ctx.stroke();ctx.restore();}
     const bv=Math.max(0,20*(1-eoc(expP)));
-    blurLayer.style.backdropFilter=`blur(${bv}px)`;blurLayer.style.webkitBackdropFilter=`blur(${bv}px)`;
-    blurLayer.style.opacity=1-eoc(expP);
+    blurLayer.style.backdropFilter=`blur(${bv}px)`;blurLayer.style.webkitBackdropFilter=`blur(${bv}px)`;blurLayer.style.opacity=1-eoc(expP);
     const fo=Math.max(0,1-expP*3);introLogo.style.opacity=fo;introHint.style.opacity=fo;
     if(expP>=1){istate='done';ctx.clearRect(0,0,W,H);canvas.style.display='none';blurLayer.style.display='none';introLogo.style.display='none';introHint.style.display='none';}
   }
   requestAnimationFrame(iloop);
 }
 requestAnimationFrame(iloop);
-
-function si(x,y){
-  curX=x;curY=y;
-  if(!inter&&istate==='waiting'){inter=true;istate='lenses_appear';lensX=x;lensY=y;appP=0;introHint.classList.add('visible');introLogo.style.transform='translate(-50%,-62%)';}
-}
+function si(x,y){curX=x;curY=y;if(!inter&&istate==='waiting'){inter=true;istate='lenses_appear';lensX=x;lensY=y;appP=0;introHint.classList.add('visible');introLogo.style.transform='translate(-50%,-62%)';}}
 function tr(){if(istate==='lenses_idle'||istate==='lenses_appear'){istate='expanding';expP=0;}}
 document.addEventListener('mousemove',e=>si(e.clientX,e.clientY));
 document.addEventListener('touchstart',e=>si(e.touches[0].clientX,e.touches[0].clientY),{passive:true});
